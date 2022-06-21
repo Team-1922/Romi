@@ -13,7 +13,7 @@ public class KeyDrive extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
 
-private final Joystick m_joystick;
+  private final Joystick m_joystick;
 
 
 
@@ -22,9 +22,9 @@ private final Joystick m_joystick;
    *
    * @param subsystem The subsystem used by this command.
    */
-  public KeyDrive(RomiDrivetrain subsystem,Joystick m_Joystick) {
+  public KeyDrive(RomiDrivetrain subsystem,Joystick joystick) {
     m_subsystem = subsystem;
-    Joystick = m_Joystick;
+    m_joystick = joystick;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_subsystem);
   }
@@ -37,7 +37,7 @@ private final Joystick m_joystick;
   @Override
   public void execute() {
 
-m_subsystem.arcadeDrive(xaxisSpeed, zaxisRotate);
+    m_subsystem.arcadeDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(0));
 
 
 

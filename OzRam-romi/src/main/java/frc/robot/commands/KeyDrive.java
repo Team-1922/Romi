@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /** An example command that uses an example subsystem. */
 public class KeyDrive extends CommandBase {
-  @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+  //@SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
 
   private final Joystick m_joystick;
@@ -37,8 +37,8 @@ public class KeyDrive extends CommandBase {
   @Override
   public void execute() {
 
-    m_subsystem.arcadeDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(0));
-
+    m_subsystem.arcadeDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(2));
+// change 2 --> 0 for wsad
 
 
 

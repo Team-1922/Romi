@@ -8,9 +8,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.KeyDrive;
+import frc.robot.commands.MoveForward;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,14 +30,19 @@ public class RobotContainer {
   private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
   private final KeyDrive m_KeyDrive = new KeyDrive(m_romiDrivetrain, m_keyboard);
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
-
+  private final MoveForward m_moveForward = new MoveForward(m_romiDrivetrain);
+  public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(m_moveForward, new WaitCommand(2));
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    
+    //  final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain.();
     m_romiDrivetrain.setDefaultCommand(m_KeyDrive);  
+    
     // Configure the button bindings
     configureButtonBindings();
   }
-
+  
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
@@ -41,7 +50,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {}
- //keydrive().whenpressed();
+  //keydrive().whenpressed();
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -50,6 +59,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_attemp;
   }
 }

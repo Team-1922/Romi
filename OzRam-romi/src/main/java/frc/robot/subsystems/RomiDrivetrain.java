@@ -41,6 +41,11 @@ public class RomiDrivetrain extends SubsystemBase {
     m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
   }
 
+  public void drive(double leftMotorSpeed, double rightMotorSpeed) {
+    m_leftMotor.set(leftMotorSpeed);
+    m_rightMotor.set(rightMotorSpeed);
+  }
+
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();

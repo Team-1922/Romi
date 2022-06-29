@@ -31,7 +31,7 @@ public class RobotContainer {
   private final KeyDrive m_KeyDrive = new KeyDrive(m_romiDrivetrain, m_keyboard);
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
   private final MoveForward m_moveForward = new MoveForward(m_romiDrivetrain);
-  public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(m_moveForward, new WaitCommand(2));
+  public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(new WaitCommand(1), m_moveForward);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {

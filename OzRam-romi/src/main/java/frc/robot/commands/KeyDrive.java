@@ -37,7 +37,7 @@ public class KeyDrive extends CommandBase {
   @Override
   public void execute() {
 
-    m_subsystem.arcadeDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(2));
+    m_subsystem.arcadeDrive(-m_joystick.getRawAxis(1), m_joystick.getRawAxis(0));
 // change 2 --> 0 for wsad
 
 

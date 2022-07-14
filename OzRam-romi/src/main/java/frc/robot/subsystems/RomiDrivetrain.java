@@ -58,6 +58,11 @@ public class RomiDrivetrain extends SubsystemBase {
   public double getRightDistanceInch() {
     return m_rightEncoder.getDistance();
   }
+  public double getLeftSpeed() {
+    return m_leftEncoder.getRate();
+
+
+  }
 
  
   

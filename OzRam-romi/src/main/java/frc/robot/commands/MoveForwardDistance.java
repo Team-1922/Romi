@@ -5,6 +5,11 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.RomiDrivetrain;
+
+import org.ejml.equation.Variable;
+import org.ejml.equation.VariableDouble;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -14,10 +19,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class MoveForwardDistance extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
+ 
 
-//fix it 
-// midpoint = m_subsystem.getRightDistanceInch + m_subsystem.getLeftDistanceInch / 2;
-  
 
 
 
@@ -28,6 +31,8 @@ public class MoveForwardDistance extends CommandBase {
    */
   public MoveForwardDistance(RomiDrivetrain subsystem) {
     m_subsystem = subsystem;
+    
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -35,16 +40,22 @@ public class MoveForwardDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+     Double midpoint = m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() /2   ;
+  
     m_subsystem.resetEncoders();
+
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if( m_subsystem.getRightDistanceInch()  >=6.2 &&  m_subsystem.getLeftDistanceInch() >= 6.2) 
-   { m_subsystem.drive(-0.3, -0.3);}
-    if( m_subsystem.getRightDistanceInch()  <=6 &&  m_subsystem.getLeftDistanceInch() <= 6)
-    {m_subsystem.drive(0.3, 0.3);}
+    Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
+  
+    if (midpoint >6.75){m_subsystem.drive(-0.3,-0.3);}
+    if (midpoint <6){m_subsystem.drive(0.3,0.3);}
+    if (midpoint <6.75 && midpoint > 6){m_subsystem.drive(0, 0);}
+  
   }
   //m_subsystem.getRightDistanceInch + m_subsystem.getLeftDistanceInch / 2
 
@@ -58,9 +69,10 @@ public class MoveForwardDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {  
-    
-   if( m_subsystem.getRightDistanceInch()  >=6 &&  m_subsystem.getLeftDistanceInch() >= 6)
-     {return true;}
+    Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
+   
+    if (midpoint <6.75 && midpoint > 6 && m_subsystem.getLeftSpeed() ==0){return true;}
+  //if (m_subsystem.getLeftSpeed() ==0 ){return true;}
       return false;
   }
 }

@@ -50,12 +50,15 @@ public class MoveForwardDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+  
+  
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
+  m_subsystem.drive((9-midpoint)*0.1+0.05, (9-midpoint)*0.1 +0.05); // make the +0.05 pos/neg
+
   
-    if (midpoint >6.75){m_subsystem.drive(-0.3,-0.3);}
-    if (midpoint <6){m_subsystem.drive(0.3,0.3);}
-    if (midpoint <6.75 && midpoint > 6){m_subsystem.drive(0, 0);}
-  
+
+    /*if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9 &&  midpoint > 8.8) {m_subsystem.drive(0.2, 0.2);}
+    if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9.2 &&  midpoint > 9) {m_subsystem.drive(-0.2, -0.2);} */
   }
   //m_subsystem.getRightDistanceInch + m_subsystem.getLeftDistanceInch / 2
 
@@ -71,8 +74,10 @@ public class MoveForwardDistance extends CommandBase {
   public boolean isFinished() {  
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
    
-    if (midpoint <6.75 && midpoint > 6 && m_subsystem.getLeftSpeed() ==0){return true;}
-  //if (m_subsystem.getLeftSpeed() ==0 ){return true;}
+    if (midpoint <9.1 && midpoint > 8.9 
+    &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.15)
+    {return true;}
+  
       return false;
   }
 }

@@ -53,7 +53,7 @@ public class MoveForwardDistance extends CommandBase {
   
   
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
-  m_subsystem.drive((9-midpoint)*0.1+0.05, (9-midpoint)*0.1 +0.05); // make the +0.05 pos/neg
+  m_subsystem.drive((9-m_subsystem.getLeftDistanceInch())*0.1, (9- m_subsystem.getRightDistanceInch())*0.1); // make the +0.05 pos/neg
 
   
 
@@ -74,8 +74,8 @@ public class MoveForwardDistance extends CommandBase {
   public boolean isFinished() {  
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
    
-    if (midpoint <9.1 && midpoint > 8.9 
-    &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.15)
+    if (midpoint > 8
+    &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.01)
     {return true;}
   
       return false;

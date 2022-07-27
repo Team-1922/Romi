@@ -20,7 +20,7 @@ public class MoveForwardDistance extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
  
-
+ public int m_targetdistance;
 
 
 
@@ -29,9 +29,9 @@ public class MoveForwardDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveForwardDistance(RomiDrivetrain subsystem) {
+  public MoveForwardDistance(RomiDrivetrain subsystem, int Targetvalue ) {
     m_subsystem = subsystem;
-    
+  m_targetdistance = Targetvalue;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -40,6 +40,8 @@ public class MoveForwardDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    
      Double midpoint = m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() /2   ;
   
     m_subsystem.resetEncoders();
@@ -53,7 +55,7 @@ public class MoveForwardDistance extends CommandBase {
   
   
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
-  m_subsystem.drive((9-m_subsystem.getLeftDistanceInch())*0.1, (9- m_subsystem.getRightDistanceInch())*0.1); // make the +0.05 pos/neg
+  m_subsystem.drive((m_targetdistance-m_subsystem.getLeftDistanceInch())*0.1, (m_targetdistance- m_subsystem.getRightDistanceInch())*0.1); // make the +0.05 pos/neg
 
   
 
@@ -74,7 +76,7 @@ public class MoveForwardDistance extends CommandBase {
   public boolean isFinished() {  
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
    
-    if (midpoint > 8
+    if (midpoint > m_targetdistance-1
     &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.01)
     {return true;}
   

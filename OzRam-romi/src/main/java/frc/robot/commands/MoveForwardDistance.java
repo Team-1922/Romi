@@ -21,18 +21,18 @@ public class MoveForwardDistance extends CommandBase {
   private final RomiDrivetrain m_subsystem;
  
  public int m_targetdistance;
-
-
+public double m_targetrange;
+ 
 
 /**
    * Creates a new MoveForward.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveForwardDistance(RomiDrivetrain subsystem, int Targetvalue ) {
+  public MoveForwardDistance(RomiDrivetrain subsystem, int Targetvalue, Double targetrange ) {
     m_subsystem = subsystem;
   m_targetdistance = Targetvalue;
-
+ m_targetrange = targetrange;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -54,10 +54,11 @@ public class MoveForwardDistance extends CommandBase {
   public void execute() {
   
   
-    Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
-  m_subsystem.drive((m_targetdistance-m_subsystem.getLeftDistanceInch())*0.1, (m_targetdistance- m_subsystem.getRightDistanceInch())*0.1); // make the +0.05 pos/neg
+   
+  m_subsystem.drive((m_targetdistance-m_subsystem.getLeftDistanceInch())*0.1 + Math.signum(m_subsystem.getLeftSpeed())* 0.15 ,
+                    (m_targetdistance- m_subsystem.getRightDistanceInch())*0.1 + Math.signum(m_subsystem.getLeftSpeed())* 0.15 ); // make the +0.05 pos/neg
 
-  
+                    
 
     /*if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9 &&  midpoint > 8.8) {m_subsystem.drive(0.2, 0.2);}
     if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9.2 &&  midpoint > 9) {m_subsystem.drive(-0.2, -0.2);} */
@@ -76,7 +77,8 @@ public class MoveForwardDistance extends CommandBase {
   public boolean isFinished() {  
     Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
    
-    if (midpoint > m_targetdistance-1
+    if (Math.abs(midpoint) > Math.abs(m_targetdistance)-m_targetrange
+    &&  Math.abs(midpoint) < Math.abs(m_targetdistance)+m_targetrange
     &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.01)
     {return true;}
   

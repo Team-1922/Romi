@@ -17,22 +17,24 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 /** An example command that uses an example subsystem. */
-public class MoveForwardDistance extends CommandBase {
+public class MoveAngle extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
  
  public int m_targetdistance;
  public double m_targetrange;
- 
-
+ public int m_lefttarget;
+// angle90/90
+ //targetvalue*angle1;
 /**
    * Creates a new MoveForward.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveForwardDistance(RomiDrivetrain subsystem, int Targetvalue, Double targetrange ) {
+  public MoveAngle(RomiDrivetrain subsystem, int Targetvalue, int Lefttarget,  Double targetrange ) {
     m_subsystem = subsystem;
     m_targetdistance = Targetvalue;
+    m_lefttarget = Lefttarget;
     m_targetrange = targetrange;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -58,6 +60,9 @@ public class MoveForwardDistance extends CommandBase {
 
     m_subsystem.drive(MathUtil.clamp(leftdrive, -1, 1),MathUtil.clamp(rightdrive, -1, 1));
                     
+   var angle = m_subsystem.getRightDistanceInch()- m_subsystem.getLeftDistanceInch() *15; 
+
+   
 
     /*if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9 &&  midpoint > 8.8) {m_subsystem.drive(0.2, 0.2);}
     if (m_subsystem.getLeftSpeed() <= 0.2  && midpoint <9.2 &&  midpoint > 9) {m_subsystem.drive(-0.2, -0.2);} */

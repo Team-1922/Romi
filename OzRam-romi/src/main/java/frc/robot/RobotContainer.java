@@ -34,7 +34,7 @@ public class RobotContainer {
   private final MoveForward m_moveForward = new MoveForward(m_romiDrivetrain);
   private final MoveForwardDistance m_MoveForwardDistance = new MoveForwardDistance(m_romiDrivetrain, 9 , 0.1 );
   public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(new WaitCommand(1), m_moveForward);
-  
+  public final ParallelDeadlineGroup m_MoveDistanceTime = new ParallelDeadlineGroup(new WaitCommand(2), m_MoveForwardDistance);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -62,6 +62,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_MoveForwardDistance;
+    return m_MoveDistanceTime;
   }
 }

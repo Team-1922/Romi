@@ -66,9 +66,11 @@ public class RomiDrivetrain extends SubsystemBase {
 
 
   }
- 
+  public double getRightSpeed() {
+    return m_rightEncoder.getRate();
 
- 
+
+  }
   
   @Override
   public void periodic() {

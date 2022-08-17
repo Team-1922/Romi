@@ -32,9 +32,9 @@ public class RobotContainer {
   private final KeyDrive m_KeyDrive = new KeyDrive(m_romiDrivetrain, m_keyboard);
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
   private final MoveForward m_moveForward = new MoveForward(m_romiDrivetrain);
-  private final MoveForwardDistance m_MoveForwardDistance = new MoveForwardDistance(m_romiDrivetrain, 9 , 0.1 );
+  private final MoveForwardDistance m_MoveForwardDistance = new MoveForwardDistance(m_romiDrivetrain, 6 , 0.1 );
   public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(new WaitCommand(1), m_moveForward);
-  public final ParallelDeadlineGroup m_MoveDistanceTime = new ParallelDeadlineGroup(new WaitCommand(2), m_MoveForwardDistance);
+  //public final ParallelDeadlineGroup m_MoveDistanceTime = new ParallelDeadlineGroup(new WaitCommand(9), m_MoveForwardDistance);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -62,6 +62,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_MoveDistanceTime;
+    return m_MoveForwardDistance;
   }
 }

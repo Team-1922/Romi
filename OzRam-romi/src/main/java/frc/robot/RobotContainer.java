@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.KeyDrive;
+import frc.robot.commands.MoveAngle;
 import frc.robot.commands.MoveForward;
 import frc.robot.commands.MoveForwardDistance;
 import frc.robot.subsystems.RomiDrivetrain;
@@ -32,8 +33,9 @@ public class RobotContainer {
   private final KeyDrive m_KeyDrive = new KeyDrive(m_romiDrivetrain, m_keyboard);
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
   private final MoveForward m_moveForward = new MoveForward(m_romiDrivetrain);
-  private final MoveForwardDistance m_MoveForwardDistance = new MoveForwardDistance(m_romiDrivetrain, 6 , 0.1 );
+  private final MoveForwardDistance m_MoveForwardDistance = new MoveForwardDistance(m_romiDrivetrain, 9 , 0.1 );
   public final ParallelDeadlineGroup m_attemp = new ParallelDeadlineGroup(new WaitCommand(1), m_moveForward);
+  public final MoveAngle m_MoveAngle = new MoveAngle(m_romiDrivetrain, -3, 1, 2.0, 90);
   //public final ParallelDeadlineGroup m_MoveDistanceTime = new ParallelDeadlineGroup(new WaitCommand(9), m_MoveForwardDistance);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -62,6 +64,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_MoveForwardDistance;
+    return m_MoveAngle;
   }
 }

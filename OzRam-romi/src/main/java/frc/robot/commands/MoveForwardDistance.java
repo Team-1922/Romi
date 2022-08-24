@@ -52,8 +52,8 @@ public class MoveForwardDistance extends CommandBase {
   @Override
   public void execute() {
   
-    var leftdrive  =(m_targetdistance-m_subsystem.getLeftDistanceInch())*0.05  + Math.signum((m_targetdistance-m_subsystem.getLeftDistanceInch()))* 0.05; 
-    var rightdrive =(m_targetdistance-m_subsystem.getRightDistanceInch())*0.05 + Math.signum((m_targetdistance-m_subsystem.getRightDistanceInch()))* 0.05;
+    var leftdrive  =(m_targetdistance-m_subsystem.getLeftDistanceInch())*0.05  + Math.signum((m_targetdistance-m_subsystem.getLeftDistanceInch()))* 0.06; 
+    var rightdrive =(m_targetdistance-m_subsystem.getRightDistanceInch())*0.05 + Math.signum((m_targetdistance-m_subsystem.getRightDistanceInch()))* 0.06;
   
 
     m_subsystem.drive(MathUtil.clamp(leftdrive, -1, 1),MathUtil.clamp(rightdrive, -1, 1));

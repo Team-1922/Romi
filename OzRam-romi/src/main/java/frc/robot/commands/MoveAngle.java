@@ -11,6 +11,7 @@ import org.ejml.equation.VariableDouble;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -24,6 +25,8 @@ public class MoveAngle extends CommandBase {
  public int m_targetdistance;
  public double m_targetrange;
  public int m_lefttarget;
+           public double angle;
+           public int m_TargetAngle;
 // angle90/90
  //targetvalue*angle1;
 /**
@@ -31,11 +34,15 @@ public class MoveAngle extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public MoveAngle(RomiDrivetrain subsystem, int Targetvalue, int Lefttarget,  Double targetrange ) {
+  public MoveAngle(RomiDrivetrain subsystem, int Targetvalue, int Lefttarget,  Double targetrange, int TargetAngle ) {
     m_subsystem = subsystem;
     m_targetdistance = Targetvalue;
     m_lefttarget = Lefttarget;
     m_targetrange = targetrange;
+    m_TargetAngle = TargetAngle;
+   angle =  m_subsystem.getRightDistanceInch()- m_subsystem.getLeftDistanceInch(); 
+ 
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -54,13 +61,16 @@ public class MoveAngle extends CommandBase {
   @Override
   public void execute() {
   
-    var leftdrive  =(m_targetdistance-m_subsystem.getLeftDistanceInch())*0.1  + Math.signum(m_subsystem.getLeftSpeed())* 0.15; 
-    var rightdrive =(m_targetdistance-m_subsystem.getRightDistanceInch())*0.1 + Math.signum(m_subsystem.getLeftSpeed())* 0.15;
+SmartDashboard.putNumber("angle", angle);
+    angle =  m_subsystem.getRightDistanceInch()- m_subsystem.getLeftDistanceInch(); 
+  
+    var leftdrive  = (m_TargetAngle- Math.abs( angle)) /6  ;//+ Math.signum((m_targetdistance-m_subsystem.getLeftDistanceInch()))* 0.06; 
+    var rightdrive =(m_TargetAngle-angle)/6 ;//+ Math.signum((m_lefttarget-m_subsystem.getRightDistanceInch()))* 0.06;
+  
   
 
-    m_subsystem.drive(MathUtil.clamp(leftdrive, -1, 1),MathUtil.clamp(rightdrive, -1, 1));
-                    
-   var angle = m_subsystem.getRightDistanceInch()- m_subsystem.getLeftDistanceInch() *15; 
+    m_subsystem.drive(MathUtil.clamp(leftdrive, -1, 1),   0);//MathUtil.clamp(rightdrive, -1, 1));
+          
 
    
 
@@ -79,10 +89,10 @@ public class MoveAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {  
-    Double midpoint =( m_subsystem.getRightDistanceInch() + m_subsystem.getLeftDistanceInch() ) /2;
    
-    if (Math.abs(midpoint) > Math.abs(m_targetdistance)-m_targetrange
-    &&  Math.abs(midpoint) < Math.abs(m_targetdistance)+m_targetrange
+    angle =  m_subsystem.getRightDistanceInch()- m_subsystem.getLeftDistanceInch() *60; 
+    if (Math.abs(angle) > Math.abs(m_TargetAngle)-m_targetrange
+    &&  Math.abs(angle) < Math.abs(m_TargetAngle)+m_targetrange
     &&  Math.abs( m_subsystem.getLeftSpeed() ) <=0.01)
     {return true;}
   

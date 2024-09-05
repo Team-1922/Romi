@@ -4,8 +4,10 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.KeyboardDriveCommand;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -20,11 +22,14 @@ public class RobotContainer {
   private final RomiDrivetrain m_romiDrivetrain = new RomiDrivetrain();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
+  private final Joystick m_joyStick = new Joystick(0);
+  private final KeyboardDriveCommand m_keyboardDriveCommand = new KeyboardDriveCommand(m_romiDrivetrain, m_joyStick);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    m_romiDrivetrain.setDefaultCommand(m_keyboardDriveCommand);
   }
 
   /**

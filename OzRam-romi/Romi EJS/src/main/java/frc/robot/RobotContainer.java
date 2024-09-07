@@ -8,8 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.robot.commands.KeyboardDriveCommand;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -22,14 +21,8 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
 
-   private final Joystick m_joystick = new Joystick(0);
-   private final KeyboardDriveCommand m_KeyboardDriveCommand =
-   new KeyboardDriveCommand(m_romiDrivetrain, m_joystick);
-
-
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_romiDrivetrain.setDefaultCommand(m_keyboardDriveConnand);
     // Configure the button bindings
     configureButtonBindings();
   }

@@ -21,8 +21,13 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_romiDrivetrain);
 
+  private final Joystick m_joystick = new Joystick(0);
+  private final KeyboardDriveCommand m_KeyboardDriveCommand = 
+    new KeyboardDriveCommand(m_romiDrivetrain, m_joystick);
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    m_romiDrivetrain.setDefaultCommand(m_KeyboardDriveCommand);
     // Configure the button bindings
     configureButtonBindings();
   }

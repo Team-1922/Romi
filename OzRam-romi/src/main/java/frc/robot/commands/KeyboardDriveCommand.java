@@ -6,19 +6,22 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.RomiDrivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.Joystick;
 
 /** An example command that uses an example subsystem. */
 public class KeyboardDriveCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final RomiDrivetrain m_subsystem;
+  private final Joystick m_joystick;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public KeyboardDriveCommand(RomiDrivetrain subsystem) {
+  public KeyboardDriveCommand(RomiDrivetrain subsystem, Joystick joystick) {
     m_subsystem = subsystem;
+    m_joystick = joystick;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
@@ -29,7 +32,9 @@ public class KeyboardDriveCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_subsystem.arcadeDrive(m_joystick.getRawAxis(1), m_joystick.getRawAxis(0));
+  }
 
   // Called once the command ends or is interrupted.
   @Override
